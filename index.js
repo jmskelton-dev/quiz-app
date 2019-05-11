@@ -70,114 +70,182 @@ let questionData =[
         number: 10,
     }];
 
-let initialView = `<div class="mainbox-inner">
+let initialView = [`<div class="mainbox-inner">
                     <div class="welcomeMessage">
                     <h1>StarTrek</h1>
                     <h1><i>The Next Generation<i></h1>
                     <p class="challenge">Test your knowledge and discover if you are a trust fan!</p>
                     <div class=startButton><button id="startQuiz" type="submit" value="Start Quiz">Start Quiz</button></div>
                     </div>
-                    </div>`;
+                    </div>`];
 
 let currentScore = 0; // used to track current score
 
 let currentQuestion = 0; // used to track current question
 
-let nextQuestion = 0; // used to track upcoming question
-
-let currentView = {
+let currentView = [
     // used to store dom data of current view
 
-};
-
-
-function answerWrong() {
-    // used to build dom data if question is wrong
-    // modifies questionData object to mark question wrong
-console.log('`answerWrong` ran')
-};
-
-function answerRight() {
-    // used to build dom data if question is right
-    // modified questionData object to mark question right
-
-console.log('`answerRight` ran')
-};
-
-function setScore() {
-// update score on correct or incorrect answer
-
-console.log('`setScore` ran')
-};
-
-function answerResult() {
-// result of the answer submission
-
-console.log('`answerResult` ran')
-};
+];
 
 function quizResult() {
+    $('.mainbox').html(`
+        <div class="mainbox-inner">
+        <div class="quiz">
+            <h1>Congratulations!</h1>
+            <h2>Great job! You scored ${currentScore}/9!</h2>
+            <div class="rightIcon"><i class="fas fa-medal fa-7x"></i></div>
+            <button type="submit" id="reset" value="Restart Quiz">Restart Quiz</button>
+            <div style="clear: both;"></div>
+        </div>
+        </div>`);
+    resetQuiz();
+}
 
+function checkAnswer() {
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+        let userGrab = $('input:checked');
+        let userAnswer = userGrab.val();
+        let correctAnswer = `${questionData[currentQuestion].answer}`;
+        console.log(userAnswer);
+        if (correctAnswer == userAnswer){
+            answerRight(correctAnswer);
+        }
+        else {
+            answerWrong(correctAnswer);
+        }
+    });
 };
 
-function updateDom(updateTo) {
-// render question in DOM
-    if ('null' != updateDom(updateTo)) {
-    $('.mainbox').html(updateTo());
+function nextQuestion() {
+    if (currentQuestion <= questionData.length) {
+    $('.quiz').on('click', '.nextButton', function (event) {
+        updateQuestionNumber();
+        updateDom();
+        checkAnswer();
+    })}
+    else {
+        quizResult();
+        resetQuiz();
     }
 };
 
-function updateQuestion(currentQuestion) {
-    let newQuestion = questionData[currentQuestion] = function () {`<div class="question-${currentQuestion}">
-        <h2>${questionData[currentquestion]}</h2>
-        <form>
-        <fieldset>
-        <label class="answerOption">
-        <input type="radio" value="${currentQuestion[question].options[0]}" name="answer" required>
-        <span>${currentQuestion[question].options[0]}</span>
-        </label>
-        <label class="answerOption">
-        <input type="radio" value="${currentQuestion[question].options[1]}" name="answer" required>
-        <span>${currentQuestion[question].options[1]}</span>
-        </label>
-        <label class="answerOption">
-        <input type="radio" value="${currentQuestion[question].options[2]}" name="answer" required>
-        <span>${currentQuestion[question].options[2]}</span>
-        </label>
-        <label class="answerOption">
-        <input type="radio" value="${currentQuestion[quesiton].options[3]}" name="answer" required>
-        <span>${currentQuestion[question].options[3]}</span>
-        </label>
-        <button type="submit" class="submitButton">Submit</button>
-        </fieldset>
-        </form>
-        </div>`};
-console.log(currentQuestion);
-console.log(newQuestion);
+function resetQuiz(){
+    $('.quiz').on('click', '#reset', function (event) {
+    currentScore = 0;
+    currentQuestion = 0;
+    initiateQuiz();
+    });
+}
+
+function answerWrong(correctAnswer) {
+    // used to build dom data if question is wrong
+    // modifies questionData object to mark question wrong
+    questionData[currentQuestion].resultCorrect = false;
+    $('.mainbox').html(`<div class="mainbox-inner">
+        <div class="quiz">
+            <h1>INCORRECT!</h1>
+            <h2>The correct answer is: ${correctAnswer}</h2>
+            <div class="wrongIcon"><i class="fas fa-thumbs-down fa-7x"></i></div>
+            <button type="submit" class="nextButton" value="Next Question">Next Question</button>
+            <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
+            <div style="clear: both;"></div>
+            </div>
+        </div>`);
+    console.log('answerWrong ran');
+    nextQuestion();
+};
+
+function updateScore() {
+    // update score on correct or incorrect answer
+        currentScore =+ 1;
+        console.log('`updateScore` ran');
+    };
+
+function answerRight() {
+    updateScore();
+    // used to build dom data if question is right
+    // modified questionData object to mark question right
+    questionData[currentQuestion].resultCorrect = true;
+    $('.mainbox').html(`<div class="mainbox-inner">
+        <div class="quiz">
+            <h1>CORRECT!</h1>
+            <h2>Great job! You got that one right!</h2>
+            <div class="rightIcon"><i class="fas fa-thumbs-up fa-7x"></i></div>
+            <button type="submit" class="nextButton" value="Next Question">Next Question</button>
+            <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
+            <div style="clear: both;"></div>
+            </div>
+        </div>`);
+    console.log('answerRight ran');
+    nextQuestion();
+};
+
+function updateQuestionNumber(){
+    currentQuestion++;
 console.log('`updateQuestion` ran');
 }
 
-function setQuestion(currentQuestion) {
-// update the current question
-    if (currentQuestion < questionData.length) {
-console.log(currentQuestion);   
-        updateQuestion(currentQuestion);
-        currentQuestion++;
-console.log(currentQuestion);            
-console.log('`setQuestion` ran');
-    }
-    else {
-        quizResult();
-    }
+function updateQuestion() { 
+    console.log('`currentQuestion is' + (currentQuestion + 1));
+    console.log(currentView);
+    console.log('`updateQuestion` ran');
+    return `<div class="mainbox-inner">
+                <div class="quiz">
+                    <h1>Question ${currentQuestion + 1}</h1>
+                    <h2>${questionData[currentQuestion].question}</h2>
+                    <form class="quizQuestions" role="quiz"> 
+                        <fieldset>
+                            <div class="quizAnswers">
+                            <label><input value="${questionData[currentQuestion].options[0]}" type="radio" id="first-answer" name="answer">
+                            ${questionData[currentQuestion].options[0]}</label>
+                            </div>
+                            <div class="quizAnswers">
+                            <label><input value="${questionData[currentQuestion].options[1]}" type="radio" id="second-answer" name="answer">
+                            ${questionData[currentQuestion].options[1]}</label>
+                            </div>
+                            <div class="quizAnswers">
+                            <label><input value="${questionData[currentQuestion].options[2]}" type="radio" id="third-answer" name="answer">
+                            ${questionData[currentQuestion].options[2]}</label>
+                            </div>
+                            <div class="quizAnswers">
+                            <label><input value="${questionData[currentQuestion].options[3]}" type="radio" id="foruth-answer" name="answer">
+                            ${questionData[currentQuestion].options[3]}</label>
+                            </div>
+                            <button type="submit" id="submitAnswer" class="mainButton" value="Submit Question">Submit Question</button>
+                        </fieldset>
+                    </form>
+                    <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>`;
+};
+
+function updateDom () {
+    // render question in DOM
+    $('.mainbox').html(updateQuestion());
+    console.log('Dom Updated')
+}
+
+function startQuiz() {
+    $('#mainbox').on('click', '#startQuiz', function (event) {
+            updateDom();
+            checkAnswer();
+    })
 };
 
 function initiateQuiz() {
-    $('mainbox').on('click', '#startQuiz', function (event) {
-        $('.welcomeMessage').addClass('hide')
-        updateQuestion(0)})
-    console.log('`initiateQuiz` ran');
-    console.log('`initalView` ran');
-};
-window.onload = function() {
+    $('#mainbox').html(initialView);
+    console.log('`initalView` set');
+}
+
+function loadQuiz () {
     initiateQuiz();
+    startQuiz();
+    checkAnswer();
+}
+
+window.onload = function() {
+    loadQuiz();
 };
