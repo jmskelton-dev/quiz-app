@@ -1,9 +1,28 @@
-const DATA = {
+const questionData = {
 
 
 }
 
-const SCORE = 0;
+const currentScore = 0;
+
+const currentQuestion = 0;
+
+const questionView = {
+
+}
+
+const answerView = {
+
+}
+
+const answerWrong = {
+
+}
+
+const answerRight = {
+
+
+}
 
 function setScore() {
 // update score on correct or incorrect answer
