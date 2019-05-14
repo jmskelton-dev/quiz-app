@@ -66,6 +66,12 @@ button:hover, button:focus {
     float: right;
 }
 
+.nextButton {
+    margin-bottom: 20px; 
+    margin-right: 20px;
+    float: right;
+}
+
 .startButton {
     text-align: center;
 }
@@ -124,17 +130,33 @@ button:hover, button:focus {
     height: 50px;
 }
 
-.rightIcon {
+.icon {
     text-align: center;
-    color: #008000;
     margin: 50px;
+}
+
+.rightIcon {
+    color: #008000;
     
 }
 .wrongIcon {
-    text-align: center;
     color: #FF0000;
-    margin: 50px;
 }
+
+.bestScore {
+    color: #FFD700;
+}
+
+.midScore {
+    color: #C0C0C0;
+
+}
+
+.bottomScore {
+    color: #FF0000;
+
+}
+
 
 .hide {
     display: none;

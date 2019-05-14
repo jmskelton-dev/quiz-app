@@ -75,7 +75,7 @@ let initialView = [`<div class="mainbox-inner">
                     <h1>StarTrek</h1>
                     <h1><i>The Next Generation<i></h1>
                     <p class="challenge">Test your knowledge and discover if you are a trust fan!</p>
-                    <div class=startButton><button id="startQuiz" type="submit" value="Start Quiz">Start Quiz</button></div>
+                    <div class=startButton><button id="startQuiz" type="submit" aria-label="Start Quiz" value="Start Quiz">Start Quiz</button></div>
                     </div>
                     </div>`];
 
@@ -83,23 +83,23 @@ let currentScore = 0; // used to track current score
 
 let currentQuestion = 0; // used to track current question
 
+let totalQuestions = questionData.length;
+
 let currentView = [
     // used to store dom data of current view
 
 ];
 
-function quizResult() {
-    $('.mainbox').html(`
-        <div class="mainbox-inner">
-        <div class="quiz">
-            <h1>Congratulations!</h1>
-            <h2>Great job! You scored ${currentScore}/9!</h2>
-            <div class="rightIcon"><i class="fas fa-medal fa-7x"></i></div>
-            <button type="submit" id="reset" value="Restart Quiz">Restart Quiz</button>
-            <div style="clear: both;"></div>
-        </div>
-        </div>`);
-    resetQuiz();
+function updateScore() {
+    // update score on correct or incorrect answer
+    currentScore++;
+    console.log('updateScore ran');
+};
+
+function updateQuestionNumber(){
+    // update current question number
+    currentQuestion++;
+    console.log('updateQuestionNumber ran and is ' + currentQuestion);
 }
 
 function checkAnswer() {
@@ -108,7 +108,7 @@ function checkAnswer() {
         let userGrab = $('input:checked');
         let userAnswer = userGrab.val();
         let correctAnswer = `${questionData[currentQuestion].answer}`;
-        console.log(userAnswer);
+        console.log('userAnswer is ' + userAnswer);
         if (correctAnswer == userAnswer){
             answerRight(correctAnswer);
         }
@@ -119,16 +119,16 @@ function checkAnswer() {
 };
 
 function nextQuestion() {
-    if (currentQuestion <= questionData.length) {
-    $('.quiz').on('click', '.nextButton', function (event) {
-        updateQuestionNumber();
+    if (currentQuestion < totalQuestions) {
+        console.log('totalQuestions is ' + totalQuestions);
+        $('.quiz').on('click', '.nextButton', function (event) {
         updateDom();
         checkAnswer();
     })}
     else {
+        $('.quiz').on('click', '.nextButton', function (event) {
         quizResult();
-        resetQuiz();
-    }
+    })}
 };
 
 function resetQuiz(){
@@ -147,21 +147,16 @@ function answerWrong(correctAnswer) {
         <div class="quiz">
             <h1>INCORRECT!</h1>
             <h2>The correct answer is: ${correctAnswer}</h2>
-            <div class="wrongIcon"><i class="fas fa-thumbs-down fa-7x"></i></div>
-            <button type="submit" class="nextButton" value="Next Question">Next Question</button>
-            <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
+            <div class="icon wrongIcon"><i class="fas fa-thumbs-down fa-7x"></i></div>
+            <button type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
+            <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
             <div style="clear: both;"></div>
             </div>
         </div>`);
     console.log('answerWrong ran');
+    updateQuestionNumber();
     nextQuestion();
 };
-
-function updateScore() {
-    // update score on correct or incorrect answer
-        currentScore =+ 1;
-        console.log('`updateScore` ran');
-    };
 
 function answerRight() {
     updateScore();
@@ -172,25 +167,21 @@ function answerRight() {
         <div class="quiz">
             <h1>CORRECT!</h1>
             <h2>Great job! You got that one right!</h2>
-            <div class="rightIcon"><i class="fas fa-thumbs-up fa-7x"></i></div>
-            <button type="submit" class="nextButton" value="Next Question">Next Question</button>
-            <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
+            <div class="icon rightIcon"><i class="fas fa-thumbs-up fa-7x"></i></div>
+            <button type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
+            <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
             <div style="clear: both;"></div>
             </div>
         </div>`);
     console.log('answerRight ran');
+    updateQuestionNumber();
     nextQuestion();
 };
 
-function updateQuestionNumber(){
-    currentQuestion++;
-console.log('`updateQuestion` ran');
-}
-
 function updateQuestion() { 
-    console.log('`currentQuestion is' + (currentQuestion + 1));
+    console.log('currentQuestion is ' + currentQuestion);
     console.log(currentView);
-    console.log('`updateQuestion` ran');
+    console.log('updateQuestion ran');
     return `<div class="mainbox-inner">
                 <div class="quiz">
                     <h1>Question ${currentQuestion + 1}</h1>
@@ -198,7 +189,7 @@ function updateQuestion() {
                     <form class="quizQuestions" role="quiz"> 
                         <fieldset>
                             <div class="quizAnswers">
-                            <label><input value="${questionData[currentQuestion].options[0]}" type="radio" id="first-answer" name="answer">
+                            <label><input value="${questionData[currentQuestion].options[0]}" type="radio" id="first-answer" name="answer" required>
                             ${questionData[currentQuestion].options[0]}</label>
                             </div>
                             <div class="quizAnswers">
@@ -210,17 +201,57 @@ function updateQuestion() {
                             ${questionData[currentQuestion].options[2]}</label>
                             </div>
                             <div class="quizAnswers">
-                            <label><input value="${questionData[currentQuestion].options[3]}" type="radio" id="foruth-answer" name="answer">
+                            <label><input value="${questionData[currentQuestion].options[3]}" type="radio" id="fourth-answer" name="answer">
                             ${questionData[currentQuestion].options[3]}</label>
                             </div>
-                            <button type="submit" id="submitAnswer" class="mainButton" value="Submit Question">Submit Question</button>
-                        </fieldset>
+                            <button type="submit" id="submitAnswer" class="mainButton" aria-label= "Submit Answer" value="Submit Answer">Submit Answer</button>
+                            <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
+                            </fieldset>
                     </form>
-                    <div class="currentScore">Current Score: ${currentScore}/${questionData.length}</div>
                     <div style="clear: both;"></div>
                 </div>
             </div>`;
 };
+
+function quizResult() {
+    if (currentScore > Math.round(totalQuestions / 1.5)) {
+        $('.mainbox').html(`
+            <div class="mainbox-inner">
+            <div class="quiz">
+                <h1>Congratulations, you are truly Command level!</h1>
+                <h2>Great job! You scored ${currentScore}/${totalQuestions}!</h2>
+                <div class="icon bestScore"><i class="fas fa-medal fa-7x"></i></div>
+                <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
+                <div style="clear: both;"></div>
+            </div>
+            </div>`);
+    }
+    else if (currentScore > Math.round(totalQuestions / 2)) {
+        $('.mainbox').html(`
+        <div class="mainbox-inner">
+        <div class="quiz">
+            <h1>That was a valiant effort but you have more research to do!</h1>
+            <h2>You scored ${currentScore}/${totalQuestions}!</h2>
+            <div class="icon midScore"><i class="fas fa-medal fa-7x"></i></div>
+            <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
+            <div style="clear: both;"></div>
+        </div>
+        </div>`);
+    }
+    else {
+        $('.mainbox').html(`
+        <div class="mainbox-inner">
+        <div class="quiz">
+            <h1>Better luck next time! You're going back to the academy, Cadet!</h1>
+            <h2>You scored ${currentScore}/${totalQuestions}!</h2>
+            <div class="icon worstScore"><i class="fas fa-user fa-7x"></i></div>
+            <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
+            <div style="clear: both;"></div>
+        </div>
+        </div>`);
+    }
+    resetQuiz();
+}
 
 function updateDom () {
     // render question in DOM
@@ -230,20 +261,19 @@ function updateDom () {
 
 function startQuiz() {
     $('#mainbox').on('click', '#startQuiz', function (event) {
-            updateDom();
-            checkAnswer();
+        updateDom();
+        checkAnswer();
     })
 };
 
 function initiateQuiz() {
     $('#mainbox').html(initialView);
-    console.log('`initalView` set');
+    console.log('initalView set');
 }
 
 function loadQuiz () {
     initiateQuiz();
     startQuiz();
-    checkAnswer();
 }
 
 window.onload = function() {
