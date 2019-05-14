@@ -1,7 +1,27 @@
+.mainbox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.mainbox-inner{
+    display: flex;
+    align-self: center;
+    
+}
+.quiz {
+    width: 500px;
+    display: flex;
+    margin: 5px;
+    padding: 15px;
+    background:#fff;
+    border-radius: 10px;
+    flex-direction: column;
+    align-self: stretch;
+}
 body {
     font-family: 'Titillium Web', sans-serif;
 }
-
 h1 {
     font-family: "Gugi", sans-serif;
     text-align: center;
@@ -11,7 +31,6 @@ h2 {
     text-align: center;
     font-size: 1.5em;
 }
-
 label {
     cursor: pointer;
     transition: all 0.3s ease-out;
@@ -22,22 +41,18 @@ label {
     padding-left: 10px;
     border-radius: 10px;
 }
-
 label:hover, label:focus {
     background-color: #0093dd;
     color: #fff;
     border-radius: 10px;
 }
-
 fieldset { 
     border: none;
 }
-
 input[type=radio] {
     margin-right: 10px;
     cursor: pointer;
 }
-
 button {
     padding: 20px;
     border: none;
@@ -48,60 +63,48 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
-
 button:hover, button:focus {
     background-color: hsl(200, 99%, 30%);
 }
-
 .welcomeMessage {
     color: #fff;
 }
-
 .challenge {
     text-align: center;
     padding: 20px;
 }
-
+.mainButtonContainer {
+    display: flex;
+    justify-content: center;
+}
 .mainButton {
-    margin-bottom: 20px; 
-    margin-right: 20px;
-    float: right;
+    width: 50%;
 }
-
 .nextButton {
-    margin-bottom: 20px; 
-    margin-right: 20px;
-    float: right;
+    width: 50%;
+    align-self: center;
 }
-
 .startButton {
     text-align: center;
 }
-
 .logo {
     height: 100px;
     max-width: auto;
     margin: 30px;
 }
-
+.quizAnswers{
+    font-size: 18px;
+    padding: 20px;
+    font-weight: bold;
+}
 .clear{
     clear: both;
 }
-
-.quiz {
-    margin: 5px;
-    padding-top: 1px;
-    background:#fff;
-    border-radius: 10px;
-}
-
 .currentScore {
-    position: absolute; 
-    padding-left: 20px;
-    padding-top: 40px; 
+    position: relative; 
+    padding-top: 20px; 
     font-weight: bold;
 }
-
 .scoreBar {
     color: #fff;
     border-bottom: solid;
@@ -110,33 +113,27 @@ button:hover, button:focus {
     margin: auto;
     padding: 2px;;
 }
-
 .currentBar {
     border-color: #0093dd;
     color: 	#0093dd;
 }
-
 .rightBar {
     border-color: #008000;
     color: 	#008000;
 }
-
 .wrongBar {
     border-color: #FF0000;
     color: #FF0000;
 }
-
 .flex-container {
     display: flex;
     width: 600px;
     height: 50px;
 }
-
 .icon {
     text-align: center;
     margin: 50px;
 }
-
 .rightIcon {
     color: #008000;
     
@@ -144,36 +141,23 @@ button:hover, button:focus {
 .wrongIcon {
     color: #FF0000;
 }
-
 .bestScore {
     color: #FFD700;
 }
-
 .midScore {
     color: #C0C0C0;
 
 }
-
 .bottomScore {
     color: #FF0000;
 
 }
-
 .hide {
     display: none;
 }
-
 @media only screen and (max-width: 1000px) {
-    .mainbox{
-    }
-    .mainbox-inner{
-        left: 25%;
-        top: 25%;
-        position: absolute;
-        width: 50%;
-        height: auto;
-        max-width: 500px;
-        max-height: 500px;
+    .quiz {
+        width: 300px;
     }
     .quizAnswers{
         font-size: 14px;
@@ -196,41 +180,6 @@ button:hover, button:focus {
     .currentScore {
         padding-left: 5px;
         padding-top: 5px;
-        font-weight: bold;
         font-size: 12px;
-        position: relative;
-    }
-    .mainButton {
-        margin-bottom: 1px;
-        margin-right: 1px;
-        float: none;
-    }
-    .nextButton {
-        margin-bottom: 1px;
-        margin-right: 1px;
-        float: none;
-    }
-    .flex-container {
-        display: none;
-    }
-}
-@media only screen and (min-width: 1000px) {
-    .mainbox{
-        left: 50%;
-        top: 25%;
-        position: absolute;
-    }
-    .mainbox-inner{
-        width: 600px;
-        height: 100%;
-        margin-left: -250px;
-        height: auto;
-        max-width: 600px;
-        max-height: 600px;
-    }
-    .quizAnswers{
-        font-size: 18px;
-        padding: 20px;
-        font-weight: bold;
     }
 }

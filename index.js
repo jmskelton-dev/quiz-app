@@ -121,12 +121,12 @@ function checkAnswer() {
 function nextQuestion() {
     if (currentQuestion < totalQuestions) {
         console.log('totalQuestions is ' + totalQuestions);
-        $('.quiz').on('click', '.nextButton', function (event) {
+        $('.quiz').on('click', '#nextButton', function (event) {
         updateDom();
         checkAnswer();
     })}
     else {
-        $('.quiz').on('click', '.nextButton', function (event) {
+        $('.quiz').on('click', '#nextButton', function (event) {
         quizResult();
     })}
 };
@@ -148,7 +148,7 @@ function answerWrong(correctAnswer) {
             <h1>INCORRECT!</h1>
             <h2>The correct answer is: ${correctAnswer}</h2>
             <div class="icon wrongIcon"><i class="fas fa-thumbs-down fa-7x"></i></div>
-            <button type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
+            <button id="nextButton" type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
             <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
             <div style="clear: both;"></div>
             </div>
@@ -168,9 +168,8 @@ function answerRight() {
             <h1>CORRECT!</h1>
             <h2>Great job! You got that one right!</h2>
             <div class="icon rightIcon"><i class="fas fa-thumbs-up fa-7x"></i></div>
-            <button type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
+            <button id="nextButton" type="submit" class="nextButton" aria-label="Next Question" value="Next Question">Next Question</button>
             <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
-            <div style="clear: both;"></div>
             </div>
         </div>`);
     console.log('answerRight ran');
@@ -204,11 +203,11 @@ function updateQuestion() {
                             <label><input value="${questionData[currentQuestion].options[3]}" type="radio" id="fourth-answer" name="answer">
                             ${questionData[currentQuestion].options[3]}</label>
                             </div>
-                            <button type="submit" id="submitAnswer" class="mainButton" aria-label= "Submit Answer" value="Submit Answer">Submit Answer</button>
+                            <div class="mainButtonContainer">
+                            <button type="submit" id="submitAnswer" class="mainButton" aria-label= "Submit Answer">Submit Answer</button></div>
                             <div class="currentScore">Current Score: ${currentScore}/${totalQuestions}</div>
                             </fieldset>
                     </form>
-                    <div style="clear: both;"></div>
                 </div>
             </div>`;
 };
@@ -222,7 +221,6 @@ function quizResult() {
                 <h2>Great job! You scored ${currentScore}/${totalQuestions}!</h2>
                 <div class="icon bestScore"><i class="fas fa-medal fa-7x"></i></div>
                 <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
-                <div style="clear: both;"></div>
             </div>
             </div>`);
     }
@@ -234,7 +232,6 @@ function quizResult() {
             <h2>You scored ${currentScore}/${totalQuestions}!</h2>
             <div class="icon midScore"><i class="fas fa-medal fa-7x"></i></div>
             <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
-            <div style="clear: both;"></div>
         </div>
         </div>`);
     }
@@ -246,7 +243,6 @@ function quizResult() {
             <h2>You scored ${currentScore}/${totalQuestions}!</h2>
             <div class="icon worstScore"><i class="fas fa-user fa-7x"></i></div>
             <button type="submit" id="reset" class="mainButton" aria-label="Restart Quiz" value="Restart Quiz">Restart Quiz</button>
-            <div style="clear: both;"></div>
         </div>
         </div>`);
     }
