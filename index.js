@@ -74,7 +74,7 @@ let initialView = [`<div class="mainbox-inner">
                     <div class="welcomeMessage">
                     <h1>StarTrek</h1>
                     <h1><i>The Next Generation<i></h1>
-                    <p class="challenge">Test your knowledge and discover if you are a trust fan!</p>
+                    <p class="challenge">Test your knowledge and discover if you are a true fan!</p>
                     <div class=startButton><button id="startQuiz" type="submit" aria-label="Start Quiz" value="Start Quiz">Start Quiz</button></div>
                     </div>
                     </div>`];
